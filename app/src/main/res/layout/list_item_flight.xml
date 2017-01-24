@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1">
+
+    <TextView
+        android:text="Initial Location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/InitialLocationLabel"
+        android:layout_weight="0.02"
+        />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/InitalLocationText"
+        android:layout_weight="0.02"
+        tools:text="Starting Airport"
+        android:hint="Starting Airport" />
+
+
+    <TextView
+        android:text="Destination"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/DestinationLabel"
+        android:layout_weight="0.02"
+        />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/DestinationText"
+        android:layout_weight="0.02"
+        tools:text="Destination Airport"
+        android:hint="Destination Airport" />
+
+    <TextView
+        android:text="Departure Date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/DepartureDateLabel"
+        android:layout_weight="0.02"
+        />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="date"
+        android:ems="10"
+        android:id="@+id/DepartureDateText"
+        android:layout_weight="0.02"
+        tools:text="MM-DD-YYYY"
+        android:hint="MM-DD-YYYY" />
+
+    <Switch
+        android:text="2-Way ticket?"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/ReturnSwitch"
+        android:layout_weight="0.02"
+        />
+
+    <TextView
+        android:text="ReturnDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/ReturnDateLabel"
+        android:layout_weight="0.02"
+        tools:text="Return Date" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="date"
+        android:ems="10"
+        android:id="@+id/ReturnDateText"
+        android:layout_weight="0.02"
+        tools:text="MM-DD-YYYY"
+        android:hint="MM-DD-YYYY" />
+
+    <CheckBox
+        android:text="Direct Flight"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/DirectFlightCheck"
+        android:layout_weight="0.02"
+        />
+
+    <TextView
+        android:text="Max Ticket Price"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/MaxPrice"
+        android:layout_weight="0.02"
+        />
+
+    <SeekBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/MaxPriceBar"
+        android:layout_weight="0.02"
+        android:max="3000" />
+
+    <Button
+        android:text="Search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/SearchButton"
+        android:layout_weight="0.02"
+        />
+
+</LinearLayout>
