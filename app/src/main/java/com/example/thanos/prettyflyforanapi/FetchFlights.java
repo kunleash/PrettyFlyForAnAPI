@@ -5,4 +5,6 @@ package com.example.thanos.prettyflyforanapi;
  */
 
 public class FetchFlights {
+
+    //an empty-for-now class
 }
