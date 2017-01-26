@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public View onCreateView(LayoutInflater inflater,ViewGroup container, Bundle savedInstanceState) {
-            
+
             View rootView = inflater.inflate(R.layout.list_item_flight, container, false);
 
             return rootView;
