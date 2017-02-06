@@ -31,7 +31,7 @@ public class FetchCity extends AsyncTask<String ,Void, String[]>{
             throws JSONException {
 
         // These are the names of the JSON objects that need to be extracted.
-        final String OWM_LIST = "list";
+        //final String OWM_LIST = "list";
         final String OMW_VALUE ="value";
         final String OWM_LABEL = "label";
 
@@ -77,7 +77,6 @@ public class FetchCity extends AsyncTask<String ,Void, String[]>{
         try {
 
             final String baseUrl = "https://api.sandbox.amadeus.com/v1.2/airports/autocomplete?";
-
             final String apiKeyParam = "apikey";
             final String cityNameParam = "term";
 
@@ -85,7 +84,7 @@ public class FetchCity extends AsyncTask<String ,Void, String[]>{
 
             Uri builtUri = Uri.parse(baseUrl).buildUpon()
                     .appendQueryParameter(apiKeyParam,"gK8OrdNsPT0QPLlYodmWK8ukgVCqelmT")
-                    .appendQueryParameter(cityNameParam,params[1])
+                    .appendQueryParameter(cityNameParam,params[1])//??
                     .build();
 
             URL url = new URL(builtUri.toString());

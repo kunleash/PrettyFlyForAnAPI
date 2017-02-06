@@ -5,6 +5,8 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import org.json.JSONException;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,6 +23,13 @@ public abstract class FetchFlights extends AsyncTask<String , Void , Void > {
 
     public FetchFlights(Context context) {
         mContext = context;
+    }
+
+    private void getWeatherDataFromJson(String flightJsonStr)
+            throws JSONException {
+
+        
+
     }
 
     protected Void doInBackground(String... params) {
@@ -132,6 +141,8 @@ public abstract class FetchFlights extends AsyncTask<String , Void , Void > {
         }
     return null;
     }
+
+
 }
 
 
