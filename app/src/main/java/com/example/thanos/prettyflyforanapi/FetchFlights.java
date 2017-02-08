@@ -4,6 +4,8 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.View;
+import android.widget.AutoCompleteTextView;
 
 import org.json.JSONException;
 
@@ -19,21 +21,27 @@ public abstract class FetchFlights extends AsyncTask<String , Void , Void > {
 
     private final String LOG_TAG = FetchFlights.class.getSimpleName();
 
-    private final Context mContext;
 
-    public FetchFlights(Context context) {
-        mContext = context;
+
+    public FetchFlights() {
+
     }
 
-    private void getWeatherDataFromJson(String flightJsonStr)
+    private void getFlightDataFromJson(String flightJsonStr)
             throws JSONException {
 
 
 
+
+
+    }
+    public void updateAirports(){
+        AirportsActivity act = new AirportsActivity();
+        act.returnAirports();
     }
 
     protected Void doInBackground(String... params) {
-
+        updateAirports();
         HttpURLConnection urlConnection = null;
         BufferedReader reader = null;
 

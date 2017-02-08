@@ -13,16 +13,13 @@
         android:layout_weight="0.02"
         />
 
-    <EditText
+
+    <AutoCompleteTextView
+        android:text="From:"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:ems="10"
-        android:id="@+id/InitalLocationText"
-        android:layout_weight="0.02"
-        tools:text="Starting Airport"
-        android:hint="Starting Airport" />
-
+        android:id="@+id/InitialAirport"
+        android:layout_weight="0.02" />
 
     <TextView
         android:text="Destination"
@@ -32,15 +29,12 @@
         android:layout_weight="0.02"
         />
 
-    <EditText
+    <AutoCompleteTextView
+        android:text="To:"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:ems="10"
-        android:id="@+id/DestinationText"
-        android:layout_weight="0.02"
-        tools:text="Destination Airport"
-        android:hint="Destination Airport" />
+        android:id="@+id/DestinationAirport"
+        android:layout_weight="0.02" />
 
     <TextView
         android:text="Departure Date"
