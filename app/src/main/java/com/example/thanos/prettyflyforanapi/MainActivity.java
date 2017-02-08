@@ -1,9 +1,6 @@
 package com.example.thanos.prettyflyforanapi;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -12,18 +9,22 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
-import android.widget.ListView;
 
-import java.util.zip.Inflater;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String FLIGHTFRAGMENT_TAG = "fragment_tag";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.list_item_flight);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        setContentView(R.layout.fragment_main);
+
+
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.container, new FlightFragment() ,FLIGHTFRAGMENT_TAG)
+                    .commit();
+        }
 
 
     }
@@ -58,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public View onCreateView(LayoutInflater inflater,ViewGroup container, Bundle savedInstanceState) {
 
-            View rootView = inflater.inflate(R.layout.list_item_flight, container, false);
+            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
             return rootView;
         }

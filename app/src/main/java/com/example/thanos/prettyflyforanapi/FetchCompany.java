@@ -3,6 +3,7 @@ package com.example.thanos.prettyflyforanapi;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.AutoCompleteTextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -24,17 +25,19 @@ public class FetchCompany extends AsyncTask<String ,Void, String[]> {
 
     private String[] getAirlinesFromJson(String airlineJsonStr)
             throws JSONException {
-        final String OMW_AIRLINE_NAME ="name";
+        final String OMW_AIRLINE_NAME = "name";
 
         JSONObject airlineJson = new JSONObject(airlineJsonStr);
         String[] resultStrs = new String[1];
 
         String airline = airlineJson.getString(OMW_AIRLINE_NAME);
-        resultStrs[1] = "Airline name: " +airline;
-
+        resultStrs[1] = "Airline name: " + airline;
 
         return resultStrs;
+
     }
+
+
 
 
 
@@ -48,7 +51,7 @@ public class FetchCompany extends AsyncTask<String ,Void, String[]> {
         BufferedReader reader = null;
 
         String AirlineJsonStr = null;
-        String FetchedAirline = getAirlineFromJson();
+
 
         try {
 
@@ -58,7 +61,7 @@ public class FetchCompany extends AsyncTask<String ,Void, String[]> {
 
             Uri builtUri = Uri.parse(baseUrl).buildUpon()
                     .appendQueryParameter(apiKeyParam,"da427aab-be42-4f25-85cc-00655b8b8d9c")
-                    .appendQueryParameter(AirlineCodeParam,FetchedAirline)//??
+                    .appendQueryParameter(AirlineCodeParam,params[0])//??
                     .build();
             URL url = new URL(builtUri.toString());
 

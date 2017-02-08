@@ -1,9 +1,11 @@
 package com.example.thanos.prettyflyforanapi;
 
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.util.Log;
 
@@ -27,6 +29,11 @@ public class FetchCity extends AsyncTask<String ,Void, String[]>{
     private final String LOG_TAG = FetchCity.class.getSimpleName();
 
 
+
+    public FetchCity(){
+
+    }
+
     private String[] getAirportsFromJson(String cityJsonStr)
             throws JSONException {
 
@@ -39,7 +46,8 @@ public class FetchCity extends AsyncTask<String ,Void, String[]>{
         JSONArray airportArray = cityJson.getJSONArray("");
 
         int length = airportArray.length();
-        String[] resultStrs = new String[length];
+        String[] resultStrsLabels = new String[length];
+        String[] resultStrsValues = new String[length];
 
         for(int i = 0; i < airportArray.length(); i++) {
             // For now, using the format "Day, description, hi/low"
@@ -52,12 +60,14 @@ public class FetchCity extends AsyncTask<String ,Void, String[]>{
             value = airport.getString(OMW_VALUE);
             label = airport.getString(OWM_LABEL);
 
-            resultStrs[i] = "label:" + label;
+            resultStrsValues[i] = "value: " +value;
+            resultStrsLabels[i] = "label: " + label;
+
         }
-        for (String s : resultStrs) {
+        for (String s : resultStrsLabels) {
             Log.v(LOG_TAG, "airport entry: " + s);
         }
-        return resultStrs;
+        return resultStrsLabels;
     }
 
     @Override
@@ -118,7 +128,7 @@ public class FetchCity extends AsyncTask<String ,Void, String[]>{
                 return null;
             }
             cityJsonStr = buffer.toString();
-            Log.v(LOG_TAG,"Forecast JSON String: "+cityJsonStr);
+            Log.v(LOG_TAG,"Airports from JSON String: "+cityJsonStr);
         } catch (IOException e) {
             Log.e(LOG_TAG, "Error ", e);
             // If the code didn't successfully get the weather data, there's no point in attemping
