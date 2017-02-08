@@ -7,7 +7,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 
+import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -17,7 +19,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 
-public abstract class FetchFlights extends AsyncTask<String , Void , Void > {
+public abstract class FetchFlights extends AsyncTask<String , Void , String > {
 
     private final String LOG_TAG = FetchFlights.class.getSimpleName();
 
@@ -30,6 +32,50 @@ public abstract class FetchFlights extends AsyncTask<String , Void , Void > {
     private void getFlightDataFromJson(String flightJsonStr)
             throws JSONException {
 
+        final String OMW_CURRENCY= "currency";
+        final String OMW_RESULTS = "results";
+
+        final String OMW_ITINERARIES="itineraries";
+
+        final String OMW_OUTBOUND ="outbound";
+        final String OMW_FLGHTS="flights";
+        final String OMW_DEPARTS_AT="departs_at";
+        final String OMW_ARRIVES_AT="arrives_at";
+
+        final String OMW_ORIGIN="origin";
+        final String OMW_AIRPORTO="airport";
+        final String OMW_DESTINATION="destination";
+        final String OMW_AIRPORTD="airport";
+
+        final String OMW_MARKETING_AIRLINE="marketing_airline";
+        final String OMW_FLIGHT_NUMBER="flight_number";
+        final String OMW_AIRCRAFT="aircraft";
+        final String OMW_SEATS_REMAINING="seats_remaining";
+        final String OMW_INBOUND="inbound";
+
+
+
+        try {
+
+
+            JSONObject flightJson = new JSONObject(flightJsonStr);
+            JSONArray flightArray = flightJson.getJSONArray("");
+
+            int length = flightArray.length();
+
+
+            for (int i = 0; i < length; i++) {
+
+
+
+            }
+
+
+        }catch (JSONException e) {
+            Log.e(LOG_TAG, e.getMessage(), e);
+            e.printStackTrace();
+        }
+
 
 
 
@@ -40,23 +86,24 @@ public abstract class FetchFlights extends AsyncTask<String , Void , Void > {
         act.returnAirports();
     }
 
-    protected Void doInBackground(String... params) {
+    protected String doInBackground(String... params) {
         updateAirports();
         HttpURLConnection urlConnection = null;
         BufferedReader reader = null;
 
         // For URL built
-        String CityJsonStr = null;
-        String CityAirport = null;
-        String Destination = null;
-        String Departure_Date=null;
-        String Return_Date=null;
-        String Num_of_Adults = null;
-        String Num_of_Children= null;
-        String Num_of_Infants=null;
-        String Max_Price=null;
-        String NonStop = null;
-        String Num_of_Results= null;
+        String flightJsonStr = null;
+        String CityAirport = params[0];
+        String Destination = params[1];
+        String Departure_Date=params[3];
+        String Return_Date=params[4];
+        String Num_of_Adults = params[5];
+        String Num_of_Children= "0";
+        String Num_of_Infants="0";
+        String Max_Price=params[6];
+        String NonStop = "true";
+        String Currency ="EUR";
+        String Num_of_Results= "10";
 
 
 
@@ -128,7 +175,7 @@ public abstract class FetchFlights extends AsyncTask<String , Void , Void > {
                 // Stream was empty.  No point in parsing.
                 return null;
             } else
-                CityJsonStr = buffer.toString();
+                flightJsonStr = buffer.toString();
         } catch (IOException e) {
             Log.e("PlaceholderFragment", "Error ", e);
             // If the code didn't successfully get the flight data, there's no point in attemping
@@ -147,7 +194,7 @@ public abstract class FetchFlights extends AsyncTask<String , Void , Void > {
                 }
             }
         }
-    return null;
+    return flightJsonStr;
     }
 
 

@@ -18,15 +18,21 @@ public class AirportsActivity extends Activity {
         setContentView(R.layout.fragment_flight_booker);
 
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
+        ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
 
-        AutoCompleteTextView textView = (AutoCompleteTextView)findViewById(R.id.InitialAirport);
-        textView.setAdapter(adapter);
+        AutoCompleteTextView textView1 = (AutoCompleteTextView)findViewById(R.id.InitialAirport);
+        textView1.setAdapter(adapter1);
+
+        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_2);
+        AutoCompleteTextView textView2 = (AutoCompleteTextView) findViewById(R.id.DestinationAirport);
+        textView2.setAdapter(adapter2);
+
+
     }
     public void returnAirports(){
 
         FetchCity fetchInitial = new FetchCity();
-        AutoCompleteTextView initCity = (AutoCompleteTextView) findViewById(R.id.InitialAirport); //??
+        AutoCompleteTextView initCity = (AutoCompleteTextView) findViewById(R.id.InitialAirport);
         String newCity = initCity.getText().toString();
         fetchInitial.execute(newCity);
 

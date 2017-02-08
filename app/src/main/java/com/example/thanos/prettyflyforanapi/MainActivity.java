@@ -28,6 +28,11 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+    protected void onStart(){
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.container, new FlightFragment() ,FLIGHTFRAGMENT_TAG)
+                .commit();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
