@@ -28,7 +28,7 @@ public abstract class FetchFlights extends AsyncTask<String , Void , Void > {
     private void getWeatherDataFromJson(String flightJsonStr)
             throws JSONException {
 
-        
+
 
     }
 
