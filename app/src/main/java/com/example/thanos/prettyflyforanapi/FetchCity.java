@@ -33,6 +33,7 @@ public class FetchCity extends AsyncTask<String ,Void, String[]>{
     public FetchCity(){
 
     }
+    String[] resultStrsLabels=null;
 
     private String[] getAirportsFromJson(String cityJsonStr)
             throws JSONException {
@@ -41,7 +42,7 @@ public class FetchCity extends AsyncTask<String ,Void, String[]>{
         //final String OWM_LIST = "list";
         final String OMW_VALUE = "value";
         final String OWM_LABEL = "label";
-        String[] resultStrsLabels=null;
+
         String[] resultStrsValues =null;
         try {
             JSONObject cityJson = new JSONObject(cityJsonStr);
@@ -72,7 +73,7 @@ public class FetchCity extends AsyncTask<String ,Void, String[]>{
         } catch (JSONException e) {
             Log.e(LOG_TAG, e.getMessage(), e);
             e.printStackTrace();
-        }return resultStrsLabels;
+        }return resultStrsValues;
 
     }
 

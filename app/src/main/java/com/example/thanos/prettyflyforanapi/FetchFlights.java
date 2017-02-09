@@ -38,12 +38,12 @@ public abstract class FetchFlights extends AsyncTask<String , Void , String > {
         final String OMW_ITINERARIES="itineraries";
 
         final String OMW_OUTBOUND ="outbound";
-        final String OMW_FLGHTS="flights";
+        final String OMW_FLIGHTS="flights";
         final String OMW_DEPARTS_AT="departs_at";
         final String OMW_ARRIVES_AT="arrives_at";
 
         final String OMW_ORIGIN="origin";
-        final String OMW_AIRPORTO="airport";
+        final String OMW_AIRPORT="airport";
         final String OMW_DESTINATION="destination";
         final String OMW_AIRPORTD="airport";
 
@@ -53,22 +53,108 @@ public abstract class FetchFlights extends AsyncTask<String , Void , String > {
         final String OMW_SEATS_REMAINING="seats_remaining";
         final String OMW_INBOUND="inbound";
 
+        final String OMW_FARE="fare";
+        final String OMW_TOTAL_PRICE = "total_price";
+
 
 
         try {
+            //Outbound Details
+            String outbound_departs_at=null;
+            String outbound_arrives_at=null;
+            String outbound_origin_airport = null;
+            String outbound_destination_airport = null;
+            String outbound_operating_airline =null;
+            String outbound_flight_number=null;
+            //Inbound Details
+            String inbound_departs_at=null;
+            String inbound_arrives_at=null;
+            String inbound_origin_airport = null;
+            String inbound_destination_airport = null;
+            String inbound_operating_airline =null;
+            String inbound_flight_number=null;
+
+            String total_price=null;
+
+            //The whole JSON String
+            JSONObject response = new JSONObject(flightJsonStr);
+
+            if (response.has(OMW_RESULTS)){
+                //Only the "results" item
+                JSONObject results = response.getJSONObject(OMW_RESULTS);
+                //Grabbing results Array from results item
+                JSONArray resultArray = results.getJSONArray(OMW_RESULTS);
+
+                if(results.has(OMW_ITINERARIES)) {
+                    //Only the "itineraries" item
+                    JSONObject itineraries = results.getJSONObject(OMW_ITINERARIES);
+                    //Grabbing the itineraries Array from "itineraries" item
+                    JSONArray itinerariesArray = itineraries.getJSONArray(OMW_ITINERARIES);
+                    if(itineraries.has(OMW_OUTBOUND)){
+                        //Only the "outbound" item
+                        JSONObject outbound = itineraries.getJSONObject(OMW_OUTBOUND);
+
+                        if(outbound.has(OMW_FLIGHTS)){
+                            JSONObject flights = outbound.getJSONObject(OMW_FLIGHTS);
+                            if((flights.has(OMW_DEPARTS_AT) && flights.has(OMW_ARRIVES_AT ))){
+                                outbound_departs_at = flights.getJSONObject(OMW_DEPARTS_AT).toString();
+                                outbound_arrives_at = flights.getJSONObject(OMW_ARRIVES_AT).toString();
+                            }
+                            if(flights.has(OMW_ORIGIN)){
+                                outbound_origin_airport = flights.getJSONObject(OMW_ORIGIN).getJSONObject(OMW_AIRPORT).toString();
+                            }
+                            if(flights.has(OMW_DESTINATION)){
+                                outbound_destination_airport = flights.getJSONObject(OMW_DESTINATION).getJSONObject(OMW_AIRPORT).toString();
+                            }
+                            if(flights.has(OMW_MARKETING_AIRLINE))
+
+                        }
 
 
-            JSONObject flightJson = new JSONObject(flightJsonStr);
-            JSONArray flightArray = flightJson.getJSONArray("");
 
-            int length = flightArray.length();
+                    }
+
+                }
+                if(results.has(OMW_FARE)){
+                    //Only the "fares" item
+                    JSONObject fares = results.getJSONObject(OMW_FARE);
+                    //Grabbing the fares Array from "fares" item
+                    JSONArray faresArray = fares.getJSONArray(OMW_FARE);
+                    if(fares.has(OMW_TOTAL_PRICE)){
+                        //Grabbing "total_price" as Obj and then casting it to String
+                        JSONObject total_priceObj = fares.getJSONObject(OMW_TOTAL_PRICE);
+                        total_price = total_priceObj.toString();
+                    }
+
+                }
 
 
-            for (int i = 0; i < length; i++) {
+                // resultArray.getJSONObject(1) is "fare"
 
 
 
+
+
+                JSONArray fare = resultArray.getJSONArray(1);
+                for (int i=0; i < resultArray.length();i++){
+                    JSONObject item = resultArray.getJSONObject(i);
+                    if(item.has("itineraries")){
+
+                    }
+                }
+                if (response.has("itineraries")){
+                    if(response.has("outbound")){
+
+                    }
+
+                }
             }
+
+
+
+
+
+
 
 
         }catch (JSONException e) {
