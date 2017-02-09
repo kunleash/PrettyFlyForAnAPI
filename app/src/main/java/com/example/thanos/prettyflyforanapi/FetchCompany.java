@@ -20,21 +20,28 @@ import java.net.URL;
  * Created by User on 6/2/2017.
  */
 
-public class FetchCompany extends AsyncTask<String ,Void, String[]> {
+public class FetchCompany extends AsyncTask<String ,Void, String> {
     private final String LOG_TAG = FetchCompany.class.getSimpleName();
 
-    private String[] getAirlinesFromJson(String airlineJsonStr)
+    private String getAirlinesFromJson(String airlineJsonStr)
             throws JSONException {
+        final String OMW_RESPONSE= "response";
         final String OMW_AIRLINE_NAME = "name";
 
+
         JSONObject airlineJson = new JSONObject(airlineJsonStr);
-        String[] resultStrs = new String[1];
+
+        if(airlineJson.has(OMW_RESPONSE)){
+            if(airlineJson.getJSONObject(OMW_RESPONSE).has(OMW_AIRLINE_NAME)){
+                String airline = airlineJson.getJSONObject(OMW_RESPONSE).get(OMW_AIRLINE_NAME).toString();
+            }
+        }
 
         String airline = airlineJson.getString(OMW_AIRLINE_NAME);
-        resultStrs[1] = "Airline name: " + airline;
 
-        return resultStrs;
 
+
+        return airline;
     }
 
 
@@ -42,7 +49,7 @@ public class FetchCompany extends AsyncTask<String ,Void, String[]> {
 
 
     @Override
-    protected String[] doInBackground(String... params) {
+    protected String doInBackground(String... params) {
 
         if (params.length == 0) {
             return null;
@@ -94,7 +101,7 @@ public class FetchCompany extends AsyncTask<String ,Void, String[]> {
                 return null;
             }
             AirlineJsonStr = buffer.toString();
-            Log.v(LOG_TAG,"Forecast JSON String: "+AirlineJsonStr);
+            Log.v(LOG_TAG,"Company JSON String: "+AirlineJsonStr);
         } catch (IOException e) {
             Log.e(LOG_TAG, "Error ", e);
             // If the code didn't successfully get the weather data, there's no point in attemping
@@ -117,10 +124,7 @@ public class FetchCompany extends AsyncTask<String ,Void, String[]> {
         } catch (JSONException e) {
             Log.e(LOG_TAG, e.getMessage(), e);
             e.printStackTrace();
-        }
-
-
-        return null;
+        }return null;
     }
 
 

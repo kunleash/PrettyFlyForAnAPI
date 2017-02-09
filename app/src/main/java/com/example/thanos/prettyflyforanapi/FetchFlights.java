@@ -47,7 +47,7 @@ public abstract class FetchFlights extends AsyncTask<String , Void , String > {
         final String OMW_DESTINATION="destination";
         final String OMW_AIRPORTD="airport";
 
-        final String OMW_MARKETING_AIRLINE="marketing_airline";
+        final String OMW_OPERATING_AIRLINE="operating_airline";
         final String OMW_FLIGHT_NUMBER="flight_number";
         final String OMW_AIRCRAFT="aircraft";
         final String OMW_SEATS_REMAINING="seats_remaining";
@@ -84,48 +84,83 @@ public abstract class FetchFlights extends AsyncTask<String , Void , String > {
                 JSONObject results = response.getJSONObject(OMW_RESULTS);
                 //Grabbing results Array from results item
                 JSONArray resultArray = results.getJSONArray(OMW_RESULTS);
+                for (int i = 0 ; i <resultArray.length();i++) {
+                    JSONObject result = resultArray.getJSONObject(i);
 
-                if(results.has(OMW_ITINERARIES)) {
-                    //Only the "itineraries" item
-                    JSONObject itineraries = results.getJSONObject(OMW_ITINERARIES);
-                    //Grabbing the itineraries Array from "itineraries" item
-                    JSONArray itinerariesArray = itineraries.getJSONArray(OMW_ITINERARIES);
-                    if(itineraries.has(OMW_OUTBOUND)){
-                        //Only the "outbound" item
-                        JSONObject outbound = itineraries.getJSONObject(OMW_OUTBOUND);
+                    if (result.has(OMW_ITINERARIES)) {
+                        //Only the "itineraries" item
+                        JSONObject itineraries = result.getJSONObject(OMW_ITINERARIES);
+                        //Grabbing the itineraries Array from "itineraries" item
+                        JSONArray itinerariesArray = itineraries.getJSONArray(OMW_ITINERARIES);
+                        if (itineraries.has(OMW_OUTBOUND)) {
+                            //Only the "outbound" item
+                            JSONObject outbound = itineraries.getJSONObject(OMW_OUTBOUND);
 
-                        if(outbound.has(OMW_FLIGHTS)){
-                            JSONObject flights = outbound.getJSONObject(OMW_FLIGHTS);
-                            if((flights.has(OMW_DEPARTS_AT) && flights.has(OMW_ARRIVES_AT ))){
-                                outbound_departs_at = flights.getJSONObject(OMW_DEPARTS_AT).toString();
-                                outbound_arrives_at = flights.getJSONObject(OMW_ARRIVES_AT).toString();
+                            if (outbound.has(OMW_FLIGHTS)) {
+                                JSONObject flights = outbound.getJSONObject(OMW_FLIGHTS);
+                                if ((flights.has(OMW_DEPARTS_AT) && flights.has(OMW_ARRIVES_AT))) {
+                                    outbound_departs_at = flights.getJSONObject(OMW_DEPARTS_AT).toString();
+                                    outbound_arrives_at = flights.getJSONObject(OMW_ARRIVES_AT).toString();
+                                }
+                                if (flights.has(OMW_ORIGIN)) {
+                                    outbound_origin_airport = flights.getJSONObject(OMW_ORIGIN).getJSONObject(OMW_AIRPORT).toString();
+                                }
+                                if (flights.has(OMW_DESTINATION)) {
+                                    outbound_destination_airport = flights.getJSONObject(OMW_DESTINATION).getJSONObject(OMW_AIRPORT).toString();
+                                }
+                                if (flights.has(OMW_OPERATING_AIRLINE)) {
+                                    outbound_operating_airline = flights.getJSONObject(OMW_OPERATING_AIRLINE).toString();
+                                }
+                                if (flights.has(OMW_FLIGHT_NUMBER)) {
+                                    outbound_flight_number = flights.getJSONObject(OMW_FLIGHT_NUMBER).toString();
+                                }
+
                             }
-                            if(flights.has(OMW_ORIGIN)){
-                                outbound_origin_airport = flights.getJSONObject(OMW_ORIGIN).getJSONObject(OMW_AIRPORT).toString();
+
+
+
+                        }
+                        if (itineraries.has(OMW_INBOUND)){
+                            JSONObject inbound = itineraries.getJSONObject(OMW_INBOUND);
+                            if(inbound.has(OMW_FLIGHTS)){
+                                JSONObject flights = inbound.getJSONObject(OMW_FLIGHTS);
+                                if ((flights.has(OMW_DEPARTS_AT) && flights.has(OMW_ARRIVES_AT))) {
+                                    inbound_departs_at = flights.getJSONObject(OMW_DEPARTS_AT).toString();
+                                    inbound_arrives_at = flights.getJSONObject(OMW_ARRIVES_AT).toString();
+                                }
+                                if (flights.has(OMW_ORIGIN)) {
+                                    inbound_origin_airport = flights.getJSONObject(OMW_ORIGIN).getJSONObject(OMW_AIRPORT).toString();
+                                }
+                                if (flights.has(OMW_DESTINATION)) {
+                                    inbound_destination_airport = flights.getJSONObject(OMW_DESTINATION).getJSONObject(OMW_AIRPORT).toString();
+                                }
+                                if (flights.has(OMW_OPERATING_AIRLINE)) {
+                                    inbound_operating_airline = flights.getJSONObject(OMW_OPERATING_AIRLINE).toString();
+                                }
+                                if (flights.has(OMW_FLIGHT_NUMBER)) {
+                                    inbound_flight_number = flights.getJSONObject(OMW_FLIGHT_NUMBER).toString();
+                                }
+
+
                             }
-                            if(flights.has(OMW_DESTINATION)){
-                                outbound_destination_airport = flights.getJSONObject(OMW_DESTINATION).getJSONObject(OMW_AIRPORT).toString();
-                            }
-                            if(flights.has(OMW_MARKETING_AIRLINE))
+
 
                         }
 
 
+                    }
+                    if (result.has(OMW_FARE)) {
+                        //Only the "fares" item
+                        JSONObject fares = result.getJSONObject(OMW_FARE);
+                        //Grabbing the fares Array from "fares" item
+                        JSONArray faresArray = fares.getJSONArray(OMW_FARE);
+                        if (fares.has(OMW_TOTAL_PRICE)) {
+                            //Grabbing "total_price" as Obj and then casting it to String
+                            JSONObject total_priceObj = fares.getJSONObject(OMW_TOTAL_PRICE);
+                            total_price = total_priceObj.toString();
+                        }
 
                     }
-
-                }
-                if(results.has(OMW_FARE)){
-                    //Only the "fares" item
-                    JSONObject fares = results.getJSONObject(OMW_FARE);
-                    //Grabbing the fares Array from "fares" item
-                    JSONArray faresArray = fares.getJSONArray(OMW_FARE);
-                    if(fares.has(OMW_TOTAL_PRICE)){
-                        //Grabbing "total_price" as Obj and then casting it to String
-                        JSONObject total_priceObj = fares.getJSONObject(OMW_TOTAL_PRICE);
-                        total_price = total_priceObj.toString();
-                    }
-
                 }
 
 

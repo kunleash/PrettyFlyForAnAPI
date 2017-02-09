@@ -25,7 +25,7 @@ import java.net.URL;
  */
 
 @RequiresApi(api = Build.VERSION_CODES.CUPCAKE)
-public class FetchCity extends AsyncTask<String ,Void, String[]>{
+public class FetchCity extends AsyncTask<String ,Void, Void>{
     private final String LOG_TAG = FetchCity.class.getSimpleName();
 
 
@@ -34,8 +34,9 @@ public class FetchCity extends AsyncTask<String ,Void, String[]>{
 
     }
     String[] resultStrsLabels=null;
+    String[] resultStrsValues=null;
 
-    private String[] getAirportsFromJson(String cityJsonStr)
+    private Void getAirportsFromJson(String cityJsonStr)
             throws JSONException {
 
         // These are the names of the JSON objects that need to be extracted.
@@ -43,7 +44,7 @@ public class FetchCity extends AsyncTask<String ,Void, String[]>{
         final String OMW_VALUE = "value";
         final String OWM_LABEL = "label";
 
-        String[] resultStrsValues =null;
+
         try {
             JSONObject cityJson = new JSONObject(cityJsonStr);
             JSONArray airportArray = cityJson.getJSONArray("");
@@ -69,20 +70,20 @@ public class FetchCity extends AsyncTask<String ,Void, String[]>{
             for (String s : resultStrsLabels) {
                 Log.v(LOG_TAG, "airport entry: " + s);
             }
-            return resultStrsLabels;
+
         } catch (JSONException e) {
             Log.e(LOG_TAG, e.getMessage(), e);
             e.printStackTrace();
-        }return resultStrsValues;
+        }return null;
 
     }
 
 
     @Override
-    protected String[] doInBackground(String... params) {
+    protected Void doInBackground(String... params) {
 
         if (params.length == 0) {
-            return null;
+
         }
         HttpURLConnection urlConnection = null;
         BufferedReader reader = null;
@@ -119,7 +120,7 @@ public class FetchCity extends AsyncTask<String ,Void, String[]>{
             StringBuffer buffer = new StringBuffer();
             if (inputStream == null) {
                 // Nothing to do.
-                return null;
+
             }
             reader = new BufferedReader(new InputStreamReader(inputStream));
 
@@ -133,7 +134,7 @@ public class FetchCity extends AsyncTask<String ,Void, String[]>{
 
             if (buffer.length() == 0) {
                 // Stream was empty.  No point in parsing.
-                return null;
+
             }
             cityJsonStr = buffer.toString();
             Log.v(LOG_TAG,"Airports from JSON String: "+cityJsonStr);
@@ -141,7 +142,7 @@ public class FetchCity extends AsyncTask<String ,Void, String[]>{
             Log.e(LOG_TAG, "Error ", e);
             // If the code didn't successfully get the weather data, there's no point in attemping
             // to parse it.
-            return null;
+
         } finally{
             if (urlConnection != null) {
                 urlConnection.disconnect();
@@ -155,7 +156,7 @@ public class FetchCity extends AsyncTask<String ,Void, String[]>{
             }
         }
         try {
-            return getAirportsFromJson(cityJsonStr);
+            getAirportsFromJson(cityJsonStr);
         } catch (JSONException e) {
             Log.e(LOG_TAG, e.getMessage(), e);
             e.printStackTrace();
