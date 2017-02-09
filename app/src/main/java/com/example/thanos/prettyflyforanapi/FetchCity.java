@@ -39,36 +39,43 @@ public class FetchCity extends AsyncTask<String ,Void, String[]>{
 
         // These are the names of the JSON objects that need to be extracted.
         //final String OWM_LIST = "list";
-        final String OMW_VALUE ="value";
+        final String OMW_VALUE = "value";
         final String OWM_LABEL = "label";
+        String[] resultStrsLabels=null;
+        String[] resultStrsValues =null;
+        try {
+            JSONObject cityJson = new JSONObject(cityJsonStr);
+            JSONArray airportArray = cityJson.getJSONArray("");
+            int length = airportArray.length();
+            resultStrsLabels = new String[length];
+            resultStrsValues = new String[length];
 
-        JSONObject cityJson = new JSONObject(cityJsonStr);
-        JSONArray airportArray = cityJson.getJSONArray("");
+            for (int i = 0; i < airportArray.length(); i++) {
+                // For now, using the format "Day, description, hi/low"
+                String value;
+                String label;
 
-        int length = airportArray.length();
-        String[] resultStrsLabels = new String[length];
-        String[] resultStrsValues = new String[length];
-
-        for(int i = 0; i < airportArray.length(); i++) {
-            // For now, using the format "Day, description, hi/low"
-            String value;
-            String label;
-
-            JSONObject airport = airportArray.getJSONObject(i);
+                JSONObject airport = airportArray.getJSONObject(i);
 
 
-            value = airport.getString(OMW_VALUE);
-            label = airport.getString(OWM_LABEL);
+                value = airport.getString(OMW_VALUE);
+                label = airport.getString(OWM_LABEL);
 
-            resultStrsValues[i] = "value: " +value;
-            resultStrsLabels[i] = "label: " + label;
+                resultStrsValues[i] = "value: " + value;
+                resultStrsLabels[i] = "label: " + label;
 
-        }
-        for (String s : resultStrsLabels) {
-            Log.v(LOG_TAG, "airport entry: " + s);
-        }
-        return resultStrsLabels;
+            }
+            for (String s : resultStrsLabels) {
+                Log.v(LOG_TAG, "airport entry: " + s);
+            }
+            return resultStrsLabels;
+        } catch (JSONException e) {
+            Log.e(LOG_TAG, e.getMessage(), e);
+            e.printStackTrace();
+        }return resultStrsLabels;
+
     }
+
 
     @Override
     protected String[] doInBackground(String... params) {
@@ -80,7 +87,7 @@ public class FetchCity extends AsyncTask<String ,Void, String[]>{
         BufferedReader reader = null;
 
         String cityJsonStr = null;
-
+        String cityName= params[0];
 
 
 
@@ -94,7 +101,7 @@ public class FetchCity extends AsyncTask<String ,Void, String[]>{
 
             Uri builtUri = Uri.parse(baseUrl).buildUpon()
                     .appendQueryParameter(apiKeyParam,"gK8OrdNsPT0QPLlYodmWK8ukgVCqelmT")
-                    .appendQueryParameter(cityNameParam,params[1])//??
+                    .appendQueryParameter(cityNameParam,cityName)//??
                     .build();
 
             URL url = new URL(builtUri.toString());
